@@ -7,16 +7,17 @@ const utilities = require('../utilities');
 const ensureAuthentication = function (req, res, next) {
   const credentials = auth(req);
 
-  utilities.auth.checkCredentials({ credentials, })
+  utilities.auth.checkCredentials({ credentials, res, })
     .then(isAuthenticated => {
       let hasAuthSkipHeader = false;
       const hasSkipHeader = Object.keys(req.headers).reduce((result, header) => {
         if (basicauthSettings.skip_auth_headers.indexOf(header) !== -1) {
           hasAuthSkipHeader = true;
         }
-        // return basicauthSettings.skip_auth_headers.indexOf(header) !== -1;
       }, false);
-      if (hasAuthSkipHeader) {
+      if (isAuthenticated==='already-sent'){ 
+        //already sent header
+      } else if (hasAuthSkipHeader) {
         next();
       } else if (isAuthenticated!==true) {
         res.statusCode = 401;
@@ -24,7 +25,6 @@ const ensureAuthentication = function (req, res, next) {
         res.end('Access denied');
       } else {
         next();
-        // res.end('Access granted')
       }      
     })
     .catch(next);
