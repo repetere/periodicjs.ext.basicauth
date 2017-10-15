@@ -6,8 +6,10 @@ const utilities = require('../utilities');
 
 const ensureAuthentication = function (req, res, next) {
   const credentials = auth(req);
-
-  utilities.auth.checkCredentials({ credentials, res, })
+  if (basicauthSettings.ignore_routes.indexOf(req.originalUrl)!==-1){
+    next();
+  } else {
+    utilities.auth.checkCredentials({ credentials, res, })
     .then(isAuthenticated => {
       let hasAuthSkipHeader = false;
       const hasSkipHeader = Object.keys(req.headers).reduce((result, header) => {
@@ -27,7 +29,8 @@ const ensureAuthentication = function (req, res, next) {
         next();
       }      
     })
-    .catch(next);
+    .catch(next);    
+  }
 };
 
 module.exports = {

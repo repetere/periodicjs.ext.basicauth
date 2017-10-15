@@ -2,6 +2,7 @@
 
 module.exports = {
   settings: {
+    ignore_routes:['/healthcheck'],    
     skip_auth_headers: ['clientid', 'authorization',],
     use_global_basic_access_auth: true,
     use_core_data_model: false, //basicauth_user
