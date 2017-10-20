@@ -1,7 +1,7 @@
 {
   "name": "periodicjs.ext.basicauth",
   "description": "basic access authentication is a method for an HTTP user agent to provide a user name and password when making a request.",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "index.js",
   "engines": {
     "node": "^6.x"
